@@ -1,0 +1,241 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Registered user account with role-based permissions",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "role": { "type": "string", "enum": ["patient", "doctor", "hospital", "admin"] },
+        "bloodGroup": { "type": "string", "maxLength": 10 },
+        "medicalId": { "type": "string", "maxLength": 50 },
+        "address": { "type": "string", "maxLength": 200 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Hospital": {
+      "title": "Hospital Facility",
+      "description": "Onboarded medical facility details and live capacity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "name": { "type": "string", "maxLength": 150 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "address": { "type": "string", "maxLength": 250 },
+        "city": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "availableBeds": { "type": "number" },
+        "totalBeds": { "type": "number" },
+        "erWaitTimeMinutes": { "type": "number" },
+        "rating": { "type": "number" },
+        "is24x7": { "type": "boolean" },
+        "ownerUid": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "name", "address", "city"]
+    },
+    "Doctor": {
+      "title": "Doctor Practitioner",
+      "description": "Verified medical practitioner profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "name": { "type": "string", "maxLength": 100 },
+        "specialty": { "type": "string", "maxLength": 100 },
+        "hospitalId": { "type": "string", "maxLength": 100 },
+        "hospitalName": { "type": "string", "maxLength": 150 },
+        "qualification": { "type": "string", "maxLength": 150 },
+        "councilRegNumber": { "type": "string", "maxLength": 50 },
+        "consultationFee": { "type": "number" },
+        "rating": { "type": "number" },
+        "isVerified": { "type": "boolean" },
+        "ownerUid": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "name", "specialty"]
+    },
+    "Appointment": {
+      "title": "Medical Appointment",
+      "description": "Patient booking for OPD or Teleconsultation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "patientId": { "type": "string", "maxLength": 128 },
+        "patientName": { "type": "string", "maxLength": 100 },
+        "doctorId": { "type": "string", "maxLength": 100 },
+        "doctorName": { "type": "string", "maxLength": 100 },
+        "hospitalId": { "type": "string", "maxLength": 100 },
+        "hospitalName": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 20 },
+        "timeSlot": { "type": "string", "maxLength": 20 },
+        "type": { "type": "string", "enum": ["OPD", "Teleconsultation", "Emergency"] },
+        "status": { "type": "string", "enum": ["Confirmed", "Checked-In", "Completed", "Cancelled"] },
+        "tokenNumber": { "type": "string", "maxLength": 30 },
+        "qrCodeData": { "type": "string", "maxLength": 250 },
+        "consultationFee": { "type": "number" },
+        "paymentStatus": { "type": "string", "maxLength": 20 }
+      },
+      "required": ["id", "patientId", "doctorId", "hospitalId", "status"]
+    },
+    "MedicalRecord": {
+      "title": "Medical Vault Record",
+      "description": "Encrypted patient lab test, prescription, or scan report",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "patientId": { "type": "string", "maxLength": 128 },
+        "familyMemberId": { "type": "string", "maxLength": 100 },
+        "title": { "type": "string", "maxLength": 150 },
+        "type": { "type": "string", "maxLength": 50 },
+        "doctorName": { "type": "string", "maxLength": 100 },
+        "hospitalName": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 20 },
+        "rawText": { "type": "string", "maxLength": 50000 },
+        "encrypted": { "type": "boolean" }
+      },
+      "required": ["id", "patientId", "title", "type"]
+    },
+    "Medicine": {
+      "title": "Medicine Dosage Reminder",
+      "description": "Patient active medicine reminder schedule",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "patientId": { "type": "string", "maxLength": 128 },
+        "medicineName": { "type": "string", "maxLength": 100 },
+        "dosage": { "type": "string", "maxLength": 50 },
+        "frequency": { "type": "string", "maxLength": 50 },
+        "times": { "type": "string", "maxLength": 100 },
+        "remainingPills": { "type": "number" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "patientId", "medicineName"]
+    },
+    "Ambulance": {
+      "title": "Ambulance Vehicle & Dispatch",
+      "description": "Active emergency ambulance unit and tracking details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "patientId": { "type": "string", "maxLength": 128 },
+        "patientName": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "vehicleNo": { "type": "string", "maxLength": 50 },
+        "driverName": { "type": "string", "maxLength": 100 },
+        "driverPhone": { "type": "string", "maxLength": 30 },
+        "type": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "maxLength": 50 },
+        "hospitalDestination": { "type": "string", "maxLength": 150 },
+        "pickupAddress": { "type": "string", "maxLength": 250 },
+        "ETA": { "type": "string", "maxLength": 20 }
+      },
+      "required": ["id", "patientName", "status"]
+    },
+    "Payment": {
+      "title": "Payment Transaction",
+      "description": "Financial ledger record for consultations, bed deposits, or OPD fees",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["debit", "credit"] },
+        "description": { "type": "string", "maxLength": 200 },
+        "date": { "type": "string", "maxLength": 30 },
+        "status": { "type": "string", "maxLength": 30 }
+      },
+      "required": ["id", "userId", "amount", "type"]
+    },
+    "Notification": {
+      "title": "User Notification",
+      "description": "In-app system notification, appointment alert, or alarm",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 150 },
+        "message": { "type": "string", "maxLength": 500 },
+        "date": { "type": "string", "maxLength": 50 },
+        "unread": { "type": "boolean" },
+        "type": { "type": "string", "enum": ["info", "alarm", "appointment", "emergency"] }
+      },
+      "required": ["id", "title", "message"]
+    },
+    "AuditLog": {
+      "title": "Vault Access Audit Log",
+      "description": "Security log of medical record access",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "patientId": { "type": "string", "maxLength": 128 },
+        "accessedBy": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "maxLength": 50 },
+        "recordTitle": { "type": "string", "maxLength": 150 },
+        "purpose": { "type": "string", "maxLength": 200 },
+        "timestamp": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "patientId", "accessedBy"]
+    },
+    "AnalyticsEvent": {
+      "title": "Application Analytics Event",
+      "description": "Logged user interaction or performance metric",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "eventName": { "type": "string", "maxLength": 100 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 50 },
+        "details": { "type": "string", "maxLength": 500 }
+      },
+      "required": ["id", "eventName"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "#/entities/User",
+      "description": "User profile document"
+    },
+    "/hospitals/{hospitalId}": {
+      "schema": "#/entities/Hospital",
+      "description": "Hospital network listing"
+    },
+    "/doctors/{doctorId}": {
+      "schema": "#/entities/Doctor",
+      "description": "Doctor directory profile"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "#/entities/Appointment",
+      "description": "Patient appointments"
+    },
+    "/medicalRecords/{recordId}": {
+      "schema": "#/entities/MedicalRecord",
+      "description": "Encrypted patient medical vault"
+    },
+    "/medicines/{medicineId}": {
+      "schema": "#/entities/Medicine",
+      "description": "Patient medicine dosage reminders"
+    },
+    "/ambulances/{ambulanceId}": {
+      "schema": "#/entities/Ambulance",
+      "description": "Live emergency ambulance dispatch logs"
+    },
+    "/payments/{paymentId}": {
+      "schema": "#/entities/Payment",
+      "description": "Patient wallet and payment transactions"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "#/entities/Notification",
+      "description": "User alert and message notifications"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "#/entities/AuditLog",
+      "description": "Security audit access records"
+    },
+    "/analyticsEvents/{eventId}": {
+      "schema": "#/entities/AnalyticsEvent",
+      "description": "App usage analytics tracking"
+    }
+  }
+}

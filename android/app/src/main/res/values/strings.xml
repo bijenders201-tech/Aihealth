@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MediRoute AI Health</string>
+    <string name="title_activity_main">MediRoute AI Health</string>
+    <string name="package_name">com.mediroute.healthapp</string>
+    <string name="custom_url_scheme">com.mediroute.healthapp</string>
+</resources>

@@ -1,0 +1,6 @@
+{
+  "name": "MediRoute AI - Healthcare & Navigation",
+  "description": "Production-ready Android-inspired Material Design 3 healthcare app featuring AI symptom analysis, hospital discovery, turn-by-turn OPD navigation, QR check-in, health records vault, emergency SOS, and multi-role dashboards.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
