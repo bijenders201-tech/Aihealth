@@ -1,0 +1,22 @@
+{
+	"appId": "com.mediroute.healthapp",
+	"appName": "MediRoute AI Health",
+	"webDir": "dist",
+	"bundledWebRuntime": false,
+	"server": {
+		"androidScheme": "https",
+		"cleartext": true
+	},
+	"android": {
+		"allowMixedContent": true,
+		"captureInput": true,
+		"webContentsDebuggingEnabled": true
+	},
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 2000,
+			"backgroundColor": "#0F172A",
+			"showSpinner": false
+		}
+	}
+}
